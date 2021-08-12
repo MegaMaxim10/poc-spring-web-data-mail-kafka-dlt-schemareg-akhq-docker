@@ -1,0 +1,9 @@
+<settings>
+	<mirrors>
+		<mirror>
+			<id>confluent-mirror</id>
+			<mirrorOf>kafka-avro-serializer</mirrorOf>
+			<url>http://packages.confluent.io/maven/</url>
+		</mirror>
+	</mirrors>
+</settings>
