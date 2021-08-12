@@ -2,7 +2,7 @@ FROM maven:3.6.3-openjdk-8 AS build
 WORKDIR /app
 COPY ./pom.xml /app
 COPY . /app/
-RUN mvn -B -f /app/pom.xml clean package
+RUN mvn -B -f /app/pom.xml clean package -DskipTests
 RUN ls /app
 
 FROM tomcat:latest
