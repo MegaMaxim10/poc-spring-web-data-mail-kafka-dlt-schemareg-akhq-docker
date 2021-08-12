@@ -223,4 +223,12 @@ services:
     ports:
       - "8062:8062"
   
-  
+  mailslurper:
+    image: marcopas/docker-mailslurper
+    restart: always
+    ports:
+      - 2500:2500
+      - 8010:8010
+      - 8015:8015
+    volumes:
+      - ./mailslurper-config.json:/opt/mailslurper/config.json
