@@ -192,7 +192,7 @@ services:
                 - name: "connect"
                   url: "http://connect:8083"
     ports:
-      - 8080:8080
+      - 8050:8080
     links:
       - broker
       - schema-registry
