@@ -36,7 +36,7 @@ public class KafkaMailProcessor {
       kafkaTemplate = "mailKafkaTemplate",
       topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
     @KafkaListener(topics = Topics.MAIL_TOPIC, groupId = Topics.MAIL_GROUP, containerFactory = "mailKafkaListenerContainerFactory")
-	public void mailListener(AvroMail avroMail) {
+	public void mailListener(AvroMail avroMail) throws Exception {
         Mail mail = Mapper.mailFromAvroMail(avroMail);
 		LOG.info("Kafka mail listener [{}]", mail);
         LOG.info("Spring will now try to send the email [{}]", mail);
