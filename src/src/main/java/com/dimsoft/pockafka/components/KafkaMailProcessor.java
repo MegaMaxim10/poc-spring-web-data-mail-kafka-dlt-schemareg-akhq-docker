@@ -9,6 +9,7 @@ import com.dimsoft.pockafka.utils.Topics;
 
 import java.lang.Exception;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class KafkaMailProcessor {
       kafkaTemplate = "mailKafkaTemplate",
       topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
     @KafkaListener(topics = Topics.MAIL_TOPIC, groupId = Topics.MAIL_GROUP, containerFactory = "mailKafkaListenerContainerFactory")
-	public void mailListener(AvroMail avroMail) throws Exception {
+	public void mailListener(ConsumerRecord<String, AvroMail> message) throws Exception {
+        AvroMail avroMail = message.value();
         Mail mail = Mapper.mailFromAvroMail(avroMail);
 		LOG.info("Kafka mail listener [{}]", mail);
         LOG.info("Spring will now try to send the email [{}]", mail);
@@ -53,7 +55,8 @@ public class KafkaMailProcessor {
 	}
 
     @DltHandler
-    public void dlt(AvroMail avroMail, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+    public void dlt(ConsumerRecord<String, AvroMail> message, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+        AvroMail avroMail = message.value();
         Mail mail = Mapper.mailFromAvroMail(avroMail);
         LOG.info("Received mail {} from topic {} in DLT.", mail, topic);
     }
