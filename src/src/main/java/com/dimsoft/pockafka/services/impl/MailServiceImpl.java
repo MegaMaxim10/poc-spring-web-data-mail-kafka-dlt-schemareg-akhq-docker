@@ -39,7 +39,7 @@ public class MailServiceImpl implements MailService {
     message.setTo(mail.getMailTo()); 
     message.setSubject(mail.getMailSubject()); 
     message.setText(mail.getMailContent());
-	LOG.info("Service is processing the mail [{}]", mail);
+	  LOG.info("Service is processing the mail [{}]", mail);
     emailSender.send(message);
   }
 }

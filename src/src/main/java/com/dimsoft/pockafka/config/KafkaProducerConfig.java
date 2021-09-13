@@ -15,6 +15,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 
 @Configuration
 public class KafkaProducerConfig {
@@ -30,7 +31,8 @@ public class KafkaProducerConfig {
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
-		configProps.put("schema.registry.url", registry);
+		configProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, registry);
+		configProps.put(KafkaAvroSerializerConfig.AUTO_REGISTER_SCHEMAS, true);
 		return new DefaultKafkaProducerFactory<>(configProps);
 	}
 

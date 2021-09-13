@@ -10,7 +10,7 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 class KafkaTopicConfig {
 	@Bean
-	NewTopic topicUser() {
+	NewTopic topicMail() {
 		return TopicBuilder.name(Topics.MAIL_TOPIC).build();
 	}
 }

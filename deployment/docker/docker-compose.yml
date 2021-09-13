@@ -96,7 +96,7 @@ services:
                 - name: "connect"
                   url: "http://connect:8083"
     ports:
-      - 8050:8080
+      - 8055:8080
     links:
       - kafka
       - schema-registry
