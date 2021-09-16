@@ -41,6 +41,7 @@ public class KafkaMailProcessor {
         AvroMail avroMail = message.value();
         if (avroMail instanceof BadAvroMail) {
             LOG.info("Received a bad avro mail [{}]", avroMail);
+            LOG.info("Storing the bad avro mail in DLT");
             mailService.sendBadAvroMailToKafka((BadAvroMail)avroMail);
             return;
         }
