@@ -9,6 +9,6 @@ import org.springframework.kafka.support.serializer.FailedDeserializationInfo;
 public class FailedAvroMailProvider implements Function<FailedDeserializationInfo, AvroMail> {
     @Override
     public AvroMail apply(FailedDeserializationInfo info) {
-        return new BadAvroMail(info);
+        return new BadAvroMail(info.getTopic(), info.getData(), info.getException());
     }
 }
