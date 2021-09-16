@@ -42,7 +42,12 @@ public class KafkaMailProcessor {
         if (avroMail instanceof BadAvroMail) {
             LOG.info("Received a bad avro mail [{}]", avroMail);
             LOG.info("Storing the bad avro mail in DLT");
-            mailService.sendBadAvroMailToKafka((BadAvroMail)avroMail);
+            try {
+                mailService.sendBadAvroMailToKafka((BadAvroMail)avroMail);
+            } catch(Exception e) {
+                LOG.info("An exception was caught");
+                e.printStackTrace();
+            }
             return;
         }
         Mail mail = Mapper.mailFromAvroMail(avroMail);
