@@ -3,6 +3,7 @@ package com.dimsoft.pockafka.components;
 import com.dimsoft.pockafka.beans.Mail;
 import com.dimsoft.pockafka.dto.BadMail;
 import com.dimsoft.pockafka.schemas.AvroMail;
+import com.dimsoft.pockafka.utils.DLTMessage;
 import com.dimsoft.pockafka.utils.Mapper;
 import com.dimsoft.pockafka.utils.Topics;
 
@@ -21,13 +22,13 @@ public class KafkaMailSender {
 	private final Logger LOG = LoggerFactory.getLogger(KafkaMailSender.class);
 	private KafkaTemplate<String, AvroMail> mailKafkaTemplate;
 	private KafkaTemplate<String, BadMail> badMailKafkaTemplate;
-	private KafkaTemplate<String, BadAvroMail> badAvroMailKafkaTemplate;
+	private KafkaTemplate<String, DLTMessage> badMessageKafkaTemplate;
 
 	@Autowired
-	public KafkaMailSender(KafkaTemplate<String, AvroMail> mailKafkaTemplate, KafkaTemplate<String, BadMail> badMailKafkaTemplate, KafkaTemplate<String, BadAvroMail> badAvroMailKafkaTemplate) {
+	public KafkaMailSender(KafkaTemplate<String, AvroMail> mailKafkaTemplate, KafkaTemplate<String, BadMail> badMailKafkaTemplate, KafkaTemplate<String, DLTMessage> badMessageKafkaTemplate) {
 		this.mailKafkaTemplate = mailKafkaTemplate;
 		this.badMailKafkaTemplate = badMailKafkaTemplate;
-		this.badAvroMailKafkaTemplate = badAvroMailKafkaTemplate;
+		this.badMessageKafkaTemplate = badMessageKafkaTemplate;
 	}
 
 	public void sendMail(Mail mail, String topicName) {
@@ -93,11 +94,11 @@ public class KafkaMailSender {
 		LOG.info("Sending bad avro mail {} to kafka in topic {}, with callback !", mail, topicName);
 		LOG.info("---------------------------------");
 
-		ListenableFuture<SendResult<String, BadAvroMail>> future = badAvroMailKafkaTemplate.send(topicName, mail);
+		ListenableFuture<SendResult<String, DLTMessage>> future = badMessageKafkaTemplate.send(topicName, mail.toDLTMessage());
 
-		future.addCallback(new ListenableFutureCallback<SendResult<String, BadAvroMail>>() {
+		future.addCallback(new ListenableFutureCallback<SendResult<String, DLTMessage>>() {
 			@Override
-			public void onSuccess(SendResult<String, BadAvroMail> result) {
+			public void onSuccess(SendResult<String, DLTMessage> result) {
 				LOG.info("Success Callback : [{}] delivered with offset - {}", mail,
 						result.getRecordMetadata().offset());
 			}

@@ -1,19 +1,16 @@
-package com.dimsoft.pockafka.components;
+package com.dimsoft.pockafka.utils;
 
-import com.dimsoft.pockafka.schemas.AvroMail;
-import com.dimsoft.pockafka.utils.DLTMessage;
-
-public class BadAvroMail extends AvroMail {
+public class DLTMessage {
     private String topic;
     private byte[] data;
     private Exception exception;
 
-    public BadAvroMail(String topic, byte[] data, Exception exception) {
+    public DLTMessage(String topic, byte[] data, Exception exception) {
         this.topic = topic;
         this.data = data;
         this.exception = exception;
     }
-
+    
     public String getTopic() {
         return topic;
     }
@@ -31,9 +28,5 @@ public class BadAvroMail extends AvroMail {
     }
     public void setException(Exception exception) {
         this.exception = exception;
-    }
-    
-    public DLTMessage toDLTMessage() {
-        return new DLTMessage(this.topic, this.data, this.exception);
     }
 }

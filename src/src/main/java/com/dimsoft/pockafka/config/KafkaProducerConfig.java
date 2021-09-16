@@ -3,9 +3,9 @@ package com.dimsoft.pockafka.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.dimsoft.pockafka.components.BadAvroMail;
 import com.dimsoft.pockafka.dto.BadMail;
 import com.dimsoft.pockafka.schemas.AvroMail;
+import com.dimsoft.pockafka.utils.DLTMessage;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -59,7 +59,7 @@ public class KafkaProducerConfig {
 	}
 
 	@Bean
-	public ProducerFactory<String, BadAvroMail> badAvroMailProducerFactory() {
+	public ProducerFactory<String, DLTMessage> badMessageProducerFactory() {
 		Map<String, Object> configProps = new HashMap<>();
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -68,7 +68,7 @@ public class KafkaProducerConfig {
 	}
 
 	@Bean
-	public KafkaTemplate<String, BadAvroMail> badAvroMailKafkaTemplate() {
-		return new KafkaTemplate<>(badAvroMailProducerFactory());
+	public KafkaTemplate<String, DLTMessage> badMessageKafkaTemplate() {
+		return new KafkaTemplate<>(badMessageProducerFactory());
 	}
 }
