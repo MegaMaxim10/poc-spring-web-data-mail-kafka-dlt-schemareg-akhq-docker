@@ -30,7 +30,12 @@ public class KafkaMailProcessor {
     @Autowired
     private MailRepository mailRepository;
 
-    @RetryableTopic
+    @RetryableTopic(
+      attempts = "1",
+      backoff = @Backoff(delay = 1000, multiplier = 2.0),
+      autoCreateTopics = "true",
+      kafkaTemplate = "mailKafkaTemplate",
+      topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
     @KafkaListener(topics = Topics.MAIL_TOPIC, groupId = Topics.MAIL_GROUP, containerFactory = "mailKafkaListenerContainerFactory")
 	public void mailListener(ConsumerRecord<String, AvroMail> message) throws Exception {
         AvroMail avroMail = message.value();
