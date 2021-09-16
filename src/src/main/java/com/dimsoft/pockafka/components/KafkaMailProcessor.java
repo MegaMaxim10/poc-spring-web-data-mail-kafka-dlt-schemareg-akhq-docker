@@ -39,6 +39,10 @@ public class KafkaMailProcessor {
     @KafkaListener(topics = Topics.MAIL_TOPIC, groupId = Topics.MAIL_GROUP, containerFactory = "mailKafkaListenerContainerFactory")
 	public void mailListener(ConsumerRecord<String, AvroMail> message) throws Exception {
         AvroMail avroMail = message.value();
+        if (avroMail instanceof BadAvroMail) {
+            LOG.info("Received a bad avro mail");
+            throw new Exception("");
+        }
         Mail mail = Mapper.mailFromAvroMail(avroMail);
 		LOG.info("Kafka mail listener [{}]", mail);
         if (mail.getMailSubject().equals("Throw Exception")) {
