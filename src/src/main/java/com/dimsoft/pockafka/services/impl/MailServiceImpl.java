@@ -4,6 +4,7 @@ import javax.transaction.Transactional;
 
 import com.dimsoft.pockafka.beans.Mail;
 import com.dimsoft.pockafka.components.KafkaMailSender;
+import com.dimsoft.pockafka.dto.BadMail;
 import com.dimsoft.pockafka.repository.MailRepository;
 import com.dimsoft.pockafka.services.MailService;
 
@@ -26,10 +27,13 @@ public class MailServiceImpl implements MailService {
   private JavaMailSender emailSender;
 
   @Override
-  public Mail sendMailToKafka(Mail mail) {
-    Mail savedMail = mailRepository.save(mail);
-    kafkaMailSender.sendMailWithCallback(savedMail);
-    return savedMail;
+  public void sendMailToKafka(Mail mail) {
+    kafkaMailSender.sendMailWithCallback(mail);
+  }
+
+  @Override
+  public void sendBadMailToKafka(BadMail mail) {
+    kafkaMailSender.sendBadMailWithCallback(mail);
   }
 
   @Override

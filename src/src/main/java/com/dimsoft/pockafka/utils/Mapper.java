@@ -1,6 +1,7 @@
 package com.dimsoft.pockafka.utils;
 
 import com.dimsoft.pockafka.beans.Mail;
+import com.dimsoft.pockafka.dto.GoodMail;
 import com.dimsoft.pockafka.schemas.AvroMail;
 
 public class Mapper {
@@ -21,6 +22,15 @@ public class Mapper {
         mail.setMailSubject(avroMail.getMailSubject().toString());
         mail.setMailContent(avroMail.getMailContent().toString());
         mail.setMailStatus((short)avroMail.getMailStatus().intValue());
+        return mail;
+    }
+
+    public static Mail mailFromGoodMail(GoodMail goodMail) {
+        Mail mail = new Mail();
+        mail.setMailTo(goodMail.getMail_to());
+        mail.setMailSubject(goodMail.getMail_subject());
+        mail.setMailContent(goodMail.getMail_content());
+        mail.setMailStatus(goodMail.getMail_status());
         return mail;
     }
 }

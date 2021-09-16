@@ -41,6 +41,10 @@ public class KafkaMailProcessor {
         AvroMail avroMail = message.value();
         Mail mail = Mapper.mailFromAvroMail(avroMail);
 		LOG.info("Kafka mail listener [{}]", mail);
+        if (mail.getMailSubject().equals("Throw Exception")) {
+            LOG.info("Throwing an exception in consumer");
+            throw new Exception("");
+        }
         LOG.info("Spring will now try to send the email [{}]", mail);
         try {
 			mailService.sendSimpleMail(mail);
@@ -49,7 +53,7 @@ public class KafkaMailProcessor {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-        LOG.info("Spring will now try to update the previous email status to 1");
+        LOG.info("Spring will now try to save the email with status to 1");
         mail.setMailStatus((short)1);
         mailRepository.save(mail);
 	}
