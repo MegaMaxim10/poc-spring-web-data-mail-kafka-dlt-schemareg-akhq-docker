@@ -3,7 +3,6 @@ package com.dimsoft.pockafka.components;
 import com.dimsoft.pockafka.beans.Mail;
 import com.dimsoft.pockafka.dto.BadMail;
 import com.dimsoft.pockafka.schemas.AvroMail;
-import com.dimsoft.pockafka.schemas.BadAvroMail;
 import com.dimsoft.pockafka.utils.Mapper;
 import com.dimsoft.pockafka.utils.Topics;
 
@@ -21,10 +20,10 @@ public class KafkaMailSender {
 
 	private final Logger LOG = LoggerFactory.getLogger(KafkaMailSender.class);
 	private KafkaTemplate<String, AvroMail> mailKafkaTemplate;
-	private KafkaTemplate<String, BadAvroMail> badMailKafkaTemplate;
+	private KafkaTemplate<String, BadMail> badMailKafkaTemplate;
 
 	@Autowired
-	public KafkaMailSender(KafkaTemplate<String, AvroMail> mailKafkaTemplate, KafkaTemplate<String, BadAvroMail> badMailKafkaTemplate) {
+	public KafkaMailSender(KafkaTemplate<String, AvroMail> mailKafkaTemplate, KafkaTemplate<String, BadMail> badMailKafkaTemplate) {
 		this.mailKafkaTemplate = mailKafkaTemplate;
 		this.badMailKafkaTemplate = badMailKafkaTemplate;
 	}
@@ -68,11 +67,11 @@ public class KafkaMailSender {
 		LOG.info("Sending bad mail {} to kafka in topic {}, with callback !", mail, topicName);
 		LOG.info("---------------------------------");
 
-		ListenableFuture<SendResult<String, BadAvroMail>> future = badMailKafkaTemplate.send(topicName, Mapper.badMailToBadAvroMail(mail));
+		ListenableFuture<SendResult<String, BadMail>> future = badMailKafkaTemplate.send(topicName, mail);
 
-		future.addCallback(new ListenableFutureCallback<SendResult<String, BadAvroMail>>() {
+		future.addCallback(new ListenableFutureCallback<SendResult<String, BadMail>>() {
 			@Override
-			public void onSuccess(SendResult<String, BadAvroMail> result) {
+			public void onSuccess(SendResult<String, BadMail> result) {
 				LOG.info("Success Callback : [{}] delivered with offset - {}", mail,
 						result.getRecordMetadata().offset());
 			}
