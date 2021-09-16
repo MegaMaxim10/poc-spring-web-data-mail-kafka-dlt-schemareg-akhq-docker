@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -5495813556557087834L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"AvroMail\",\"namespace\":\"com.dimsoft.pockafka.schemas\",\"fields\":[{\"name\":\"mail_id\",\"type\":\"int\",\"doc\":\"Id of the mail\"},{\"name\":\"mail_to\",\"type\":\"string\",\"doc\":\"Mail to ...\"},{\"name\":\"mail_subject\",\"type\":\"string\",\"doc\":\"Subject of the mail\"},{\"name\":\"mail_content\",\"type\":\"string\",\"doc\":\"Content of the mail\"},{\"name\":\"mail_status\",\"type\":\"int\",\"doc\":\"Status of the mail\"}],\"version\":\"1\"}");
+  private static final long serialVersionUID = 998798546389091981L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"AvroMail\",\"namespace\":\"com.dimsoft.pockafka.schemas\",\"fields\":[{\"name\":\"mail_to\",\"type\":\"string\",\"doc\":\"Mail to ...\"},{\"name\":\"mail_subject\",\"type\":\"string\",\"doc\":\"Subject of the mail\"},{\"name\":\"mail_content\",\"type\":\"string\",\"doc\":\"Content of the mail\"},{\"name\":\"mail_status\",\"type\":\"int\",\"doc\":\"Status of the mail\"}],\"version\":\"1\"}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -51,8 +51,6 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
     return DECODER.decode(b);
   }
 
-  /** Id of the mail */
-  @Deprecated public int mail_id;
   /** Mail to ... */
   @Deprecated public java.lang.CharSequence mail_to;
   /** Subject of the mail */
@@ -71,14 +69,12 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
 
   /**
    * All-args constructor.
-   * @param mail_id Id of the mail
    * @param mail_to Mail to ...
    * @param mail_subject Subject of the mail
    * @param mail_content Content of the mail
    * @param mail_status Status of the mail
    */
-  public AvroMail(java.lang.Integer mail_id, java.lang.CharSequence mail_to, java.lang.CharSequence mail_subject, java.lang.CharSequence mail_content, java.lang.Integer mail_status) {
-    this.mail_id = mail_id;
+  public AvroMail(java.lang.CharSequence mail_to, java.lang.CharSequence mail_subject, java.lang.CharSequence mail_content, java.lang.Integer mail_status) {
     this.mail_to = mail_to;
     this.mail_subject = mail_subject;
     this.mail_content = mail_content;
@@ -89,11 +85,10 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return mail_id;
-    case 1: return mail_to;
-    case 2: return mail_subject;
-    case 3: return mail_content;
-    case 4: return mail_status;
+    case 0: return mail_to;
+    case 1: return mail_subject;
+    case 2: return mail_content;
+    case 3: return mail_status;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -102,30 +97,12 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: mail_id = (java.lang.Integer)value$; break;
-    case 1: mail_to = (java.lang.CharSequence)value$; break;
-    case 2: mail_subject = (java.lang.CharSequence)value$; break;
-    case 3: mail_content = (java.lang.CharSequence)value$; break;
-    case 4: mail_status = (java.lang.Integer)value$; break;
+    case 0: mail_to = (java.lang.CharSequence)value$; break;
+    case 1: mail_subject = (java.lang.CharSequence)value$; break;
+    case 2: mail_content = (java.lang.CharSequence)value$; break;
+    case 3: mail_status = (java.lang.Integer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
-  }
-
-  /**
-   * Gets the value of the 'mail_id' field.
-   * @return Id of the mail
-   */
-  public java.lang.Integer getMailId() {
-    return mail_id;
-  }
-
-  /**
-   * Sets the value of the 'mail_id' field.
-   * Id of the mail
-   * @param value the value to set.
-   */
-  public void setMailId(java.lang.Integer value) {
-    this.mail_id = value;
   }
 
   /**
@@ -228,8 +205,6 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<AvroMail>
     implements org.apache.avro.data.RecordBuilder<AvroMail> {
 
-    /** Id of the mail */
-    private int mail_id;
     /** Mail to ... */
     private java.lang.CharSequence mail_to;
     /** Subject of the mail */
@@ -250,25 +225,21 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
      */
     private Builder(com.dimsoft.pockafka.schemas.AvroMail.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.mail_id)) {
-        this.mail_id = data().deepCopy(fields()[0].schema(), other.mail_id);
+      if (isValidValue(fields()[0], other.mail_to)) {
+        this.mail_to = data().deepCopy(fields()[0].schema(), other.mail_to);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.mail_to)) {
-        this.mail_to = data().deepCopy(fields()[1].schema(), other.mail_to);
+      if (isValidValue(fields()[1], other.mail_subject)) {
+        this.mail_subject = data().deepCopy(fields()[1].schema(), other.mail_subject);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.mail_subject)) {
-        this.mail_subject = data().deepCopy(fields()[2].schema(), other.mail_subject);
+      if (isValidValue(fields()[2], other.mail_content)) {
+        this.mail_content = data().deepCopy(fields()[2].schema(), other.mail_content);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.mail_content)) {
-        this.mail_content = data().deepCopy(fields()[3].schema(), other.mail_content);
+      if (isValidValue(fields()[3], other.mail_status)) {
+        this.mail_status = data().deepCopy(fields()[3].schema(), other.mail_status);
         fieldSetFlags()[3] = true;
-      }
-      if (isValidValue(fields()[4], other.mail_status)) {
-        this.mail_status = data().deepCopy(fields()[4].schema(), other.mail_status);
-        fieldSetFlags()[4] = true;
       }
     }
 
@@ -278,68 +249,22 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
      */
     private Builder(com.dimsoft.pockafka.schemas.AvroMail other) {
             super(SCHEMA$);
-      if (isValidValue(fields()[0], other.mail_id)) {
-        this.mail_id = data().deepCopy(fields()[0].schema(), other.mail_id);
+      if (isValidValue(fields()[0], other.mail_to)) {
+        this.mail_to = data().deepCopy(fields()[0].schema(), other.mail_to);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.mail_to)) {
-        this.mail_to = data().deepCopy(fields()[1].schema(), other.mail_to);
+      if (isValidValue(fields()[1], other.mail_subject)) {
+        this.mail_subject = data().deepCopy(fields()[1].schema(), other.mail_subject);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.mail_subject)) {
-        this.mail_subject = data().deepCopy(fields()[2].schema(), other.mail_subject);
+      if (isValidValue(fields()[2], other.mail_content)) {
+        this.mail_content = data().deepCopy(fields()[2].schema(), other.mail_content);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.mail_content)) {
-        this.mail_content = data().deepCopy(fields()[3].schema(), other.mail_content);
+      if (isValidValue(fields()[3], other.mail_status)) {
+        this.mail_status = data().deepCopy(fields()[3].schema(), other.mail_status);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.mail_status)) {
-        this.mail_status = data().deepCopy(fields()[4].schema(), other.mail_status);
-        fieldSetFlags()[4] = true;
-      }
-    }
-
-    /**
-      * Gets the value of the 'mail_id' field.
-      * Id of the mail
-      * @return The value.
-      */
-    public java.lang.Integer getMailId() {
-      return mail_id;
-    }
-
-    /**
-      * Sets the value of the 'mail_id' field.
-      * Id of the mail
-      * @param value The value of 'mail_id'.
-      * @return This builder.
-      */
-    public com.dimsoft.pockafka.schemas.AvroMail.Builder setMailId(int value) {
-      validate(fields()[0], value);
-      this.mail_id = value;
-      fieldSetFlags()[0] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'mail_id' field has been set.
-      * Id of the mail
-      * @return True if the 'mail_id' field has been set, false otherwise.
-      */
-    public boolean hasMailId() {
-      return fieldSetFlags()[0];
-    }
-
-
-    /**
-      * Clears the value of the 'mail_id' field.
-      * Id of the mail
-      * @return This builder.
-      */
-    public com.dimsoft.pockafka.schemas.AvroMail.Builder clearMailId() {
-      fieldSetFlags()[0] = false;
-      return this;
     }
 
     /**
@@ -358,9 +283,9 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder setMailTo(java.lang.CharSequence value) {
-      validate(fields()[1], value);
+      validate(fields()[0], value);
       this.mail_to = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[0] = true;
       return this;
     }
 
@@ -370,7 +295,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return True if the 'mail_to' field has been set, false otherwise.
       */
     public boolean hasMailTo() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[0];
     }
 
 
@@ -381,7 +306,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder clearMailTo() {
       mail_to = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[0] = false;
       return this;
     }
 
@@ -401,9 +326,9 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder setMailSubject(java.lang.CharSequence value) {
-      validate(fields()[2], value);
+      validate(fields()[1], value);
       this.mail_subject = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -413,7 +338,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return True if the 'mail_subject' field has been set, false otherwise.
       */
     public boolean hasMailSubject() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[1];
     }
 
 
@@ -424,7 +349,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder clearMailSubject() {
       mail_subject = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -444,9 +369,9 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder setMailContent(java.lang.CharSequence value) {
-      validate(fields()[3], value);
+      validate(fields()[2], value);
       this.mail_content = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -456,7 +381,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return True if the 'mail_content' field has been set, false otherwise.
       */
     public boolean hasMailContent() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[2];
     }
 
 
@@ -467,7 +392,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder clearMailContent() {
       mail_content = null;
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -487,9 +412,9 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder setMailStatus(int value) {
-      validate(fields()[4], value);
+      validate(fields()[3], value);
       this.mail_status = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[3] = true;
       return this;
     }
 
@@ -499,7 +424,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return True if the 'mail_status' field has been set, false otherwise.
       */
     public boolean hasMailStatus() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[3];
     }
 
 
@@ -509,7 +434,7 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public com.dimsoft.pockafka.schemas.AvroMail.Builder clearMailStatus() {
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -518,11 +443,10 @@ public class AvroMail extends org.apache.avro.specific.SpecificRecordBase implem
     public AvroMail build() {
       try {
         AvroMail record = new AvroMail();
-        record.mail_id = fieldSetFlags()[0] ? this.mail_id : (java.lang.Integer) defaultValue(fields()[0]);
-        record.mail_to = fieldSetFlags()[1] ? this.mail_to : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.mail_subject = fieldSetFlags()[2] ? this.mail_subject : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.mail_content = fieldSetFlags()[3] ? this.mail_content : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.mail_status = fieldSetFlags()[4] ? this.mail_status : (java.lang.Integer) defaultValue(fields()[4]);
+        record.mail_to = fieldSetFlags()[0] ? this.mail_to : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.mail_subject = fieldSetFlags()[1] ? this.mail_subject : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.mail_content = fieldSetFlags()[2] ? this.mail_content : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.mail_status = fieldSetFlags()[3] ? this.mail_status : (java.lang.Integer) defaultValue(fields()[3]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

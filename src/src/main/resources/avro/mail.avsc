@@ -4,7 +4,6 @@
      "name": "AvroMail",
      "version": "1",
      "fields": [
-       { "name": "mail_id", "type": "int", "doc": "Id of the mail" },
        { "name": "mail_to", "type": "string", "doc": "Mail to ..." },
        { "name": "mail_subject", "type": "string", "doc": "Subject of the mail" },
        { "name": "mail_content", "type": "string", "doc": "Content of the mail" },
