@@ -1,13 +1,14 @@
 package com.dimsoft.pockafka.utils;
 
 import com.dimsoft.pockafka.beans.Mail;
+import com.dimsoft.pockafka.dto.BadMail;
 import com.dimsoft.pockafka.dto.GoodMail;
 import com.dimsoft.pockafka.schemas.AvroMail;
+import com.dimsoft.pockafka.schemas.BadAvroMail;
 
 public class Mapper {
     public static AvroMail mailToAvroMail(Mail mail) {
         return AvroMail.newBuilder()
-                       .setMailId(mail.getMailId())
                        .setMailTo(mail.getMailTo())
                        .setMailSubject(mail.getMailSubject())
                        .setMailContent(mail.getMailContent())
@@ -15,9 +16,17 @@ public class Mapper {
                        .build();
     }
 
+    public static BadAvroMail badMailToBadAvroMail(BadMail mail) {
+        return BadAvroMail.newBuilder()
+                       .setMailTo(mail.getMail_to())
+                       .setMailSubject(mail.getMail_subject())
+                       .setMailConten(mail.getMail_conten())
+                       .setMailStatus(mail.getMail_status())
+                       .build();
+    }
+
     public static Mail mailFromAvroMail(AvroMail avroMail) {
         Mail mail = new Mail();
-        mail.setMailId(avroMail.getMailId());
         mail.setMailTo(avroMail.getMailTo().toString());
         mail.setMailSubject(avroMail.getMailSubject().toString());
         mail.setMailContent(avroMail.getMailContent().toString());
