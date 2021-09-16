@@ -31,7 +31,7 @@ public class KafkaMailProcessor {
     private MailRepository mailRepository;
 
     @RetryableTopic(
-      attempts = "1",
+      attempts = "3",
       backoff = @Backoff(delay = 1000, multiplier = 2.0),
       autoCreateTopics = "true",
       kafkaTemplate = "mailKafkaTemplate",
@@ -40,8 +40,9 @@ public class KafkaMailProcessor {
 	public void mailListener(ConsumerRecord<String, AvroMail> message) throws Exception {
         AvroMail avroMail = message.value();
         if (avroMail instanceof BadAvroMail) {
-            LOG.info("Received a bad avro mail");
-            throw new Exception("");
+            LOG.info("Received a bad avro mail [{}]", avroMail);
+            mailService.sendBadAvroMailToKafka((BadAvroMail)avroMail);
+            return;
         }
         Mail mail = Mapper.mailFromAvroMail(avroMail);
 		LOG.info("Kafka mail listener [{}]", mail);

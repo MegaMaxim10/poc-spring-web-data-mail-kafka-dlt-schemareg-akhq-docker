@@ -13,4 +13,9 @@ class KafkaTopicConfig {
 	NewTopic topicMail() {
 		return TopicBuilder.name(Topics.MAIL_TOPIC).build();
 	}
+
+	@Bean
+	NewTopic topicMailDLT() {
+		return TopicBuilder.name(Topics.MAIL_TOPIC_DLT).build();
+	}
 }

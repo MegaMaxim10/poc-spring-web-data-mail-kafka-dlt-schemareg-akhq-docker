@@ -21,11 +21,13 @@ public class KafkaMailSender {
 	private final Logger LOG = LoggerFactory.getLogger(KafkaMailSender.class);
 	private KafkaTemplate<String, AvroMail> mailKafkaTemplate;
 	private KafkaTemplate<String, BadMail> badMailKafkaTemplate;
+	private KafkaTemplate<String, BadAvroMail> badAvroMailKafkaTemplate;
 
 	@Autowired
-	public KafkaMailSender(KafkaTemplate<String, AvroMail> mailKafkaTemplate, KafkaTemplate<String, BadMail> badMailKafkaTemplate) {
+	public KafkaMailSender(KafkaTemplate<String, AvroMail> mailKafkaTemplate, KafkaTemplate<String, BadMail> badMailKafkaTemplate, KafkaTemplate<String, BadAvroMail> badAvroMailKafkaTemplate) {
 		this.mailKafkaTemplate = mailKafkaTemplate;
 		this.badMailKafkaTemplate = badMailKafkaTemplate;
+		this.badAvroMailKafkaTemplate = badAvroMailKafkaTemplate;
 	}
 
 	public void sendMail(Mail mail, String topicName) {
@@ -85,5 +87,29 @@ public class KafkaMailSender {
 
     public void sendBadMailWithCallback(BadMail mail) {
         this.sendBadMailWithCallback(mail, Topics.MAIL_TOPIC);
+    }
+
+	public void sendBadAvroMailWithCallback(BadAvroMail mail, String topicName) {
+		LOG.info("Sending bad avro mail {} to kafka in topic {}, with callback !", mail, topicName);
+		LOG.info("---------------------------------");
+
+		ListenableFuture<SendResult<String, BadAvroMail>> future = badAvroMailKafkaTemplate.send(topicName, mail);
+
+		future.addCallback(new ListenableFutureCallback<SendResult<String, BadAvroMail>>() {
+			@Override
+			public void onSuccess(SendResult<String, BadAvroMail> result) {
+				LOG.info("Success Callback : [{}] delivered with offset - {}", mail,
+						result.getRecordMetadata().offset());
+			}
+
+			@Override
+			public void onFailure(Throwable ex) {
+				LOG.warn("Failure Callback: Unable to deliver message [{}]. {}", mail, ex.getMessage());
+			}
+		});
+	}
+
+    public void sendBadAvroMailWithCallback(BadAvroMail mail) {
+        this.sendBadAvroMailWithCallback(mail, Topics.MAIL_TOPIC_DLT);
     }
 }

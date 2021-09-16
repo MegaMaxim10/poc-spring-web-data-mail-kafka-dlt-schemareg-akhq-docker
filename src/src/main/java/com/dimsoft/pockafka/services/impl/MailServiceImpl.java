@@ -3,6 +3,7 @@ package com.dimsoft.pockafka.services.impl;
 import javax.transaction.Transactional;
 
 import com.dimsoft.pockafka.beans.Mail;
+import com.dimsoft.pockafka.components.BadAvroMail;
 import com.dimsoft.pockafka.components.KafkaMailSender;
 import com.dimsoft.pockafka.dto.BadMail;
 import com.dimsoft.pockafka.repository.MailRepository;
@@ -34,6 +35,11 @@ public class MailServiceImpl implements MailService {
   @Override
   public void sendBadMailToKafka(BadMail mail) {
     kafkaMailSender.sendBadMailWithCallback(mail);
+  }
+
+  @Override
+  public void sendBadAvroMailToKafka(BadAvroMail mail) {
+    kafkaMailSender.sendBadAvroMailWithCallback(mail);
   }
 
   @Override
