@@ -3,6 +3,7 @@ package com.dimsoft.pockafka.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.dimsoft.pockafka.components.FailedAvroMailProvider;
 import com.dimsoft.pockafka.schemas.AvroMail;
 import com.dimsoft.pockafka.utils.Topics;
 
@@ -37,6 +38,7 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class); 
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, KafkaAvroDeserializer.class);
+        props.put(ErrorHandlingDeserializer.VALUE_FUNCTION, FailedAvroMailProvider.class);
         // props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		// props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
         props.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, registry);
