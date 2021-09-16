@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.dimsoft.pockafka.dto.BadMail;
 import com.dimsoft.pockafka.schemas.AvroMail;
+import com.dimsoft.pockafka.schemas.BadAvroMail;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -44,22 +45,18 @@ public class KafkaProducerConfig {
 	}
 
 	@Bean
-	public ProducerFactory<String, BadMail> badMailProducerFactory() {
-		/*Map<String, Object> configProps = new HashMap<>();
+	public ProducerFactory<String, BadAvroMail> badMailProducerFactory() {
+		Map<String, Object> configProps = new HashMap<>();
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
 		configProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, registry);
-		configProps.put(KafkaAvroSerializerConfig.AUTO_REGISTER_SCHEMAS, true);*/
-		Map<String, Object> configProps = new HashMap<>();
-		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+		configProps.put(KafkaAvroSerializerConfig.AUTO_REGISTER_SCHEMAS, false);
 		return new DefaultKafkaProducerFactory<>(configProps);
 	}
 
 	@Bean
-	public KafkaTemplate<String, BadMail> badMailKafkaTemplate() {
+	public KafkaTemplate<String, BadAvroMail> badMailKafkaTemplate() {
 		return new KafkaTemplate<>(badMailProducerFactory());
 	}
 }

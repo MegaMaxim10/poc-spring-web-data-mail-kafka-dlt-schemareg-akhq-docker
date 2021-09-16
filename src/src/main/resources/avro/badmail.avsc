@@ -1,0 +1,12 @@
+{
+     "type": "record",
+     "namespace": "com.dimsoft.pockafka.schemas",
+     "name": "BadAvroMail",
+     "version": "1",
+     "fields": [
+       { "name": "mail_to", "type": "string", "doc": "Mail to ..." },
+       { "name": "mail_subject", "type": "string", "doc": "Subject of the mail" },
+       { "name": "mail_conten", "type": "string", "doc": "Content of the mail" },
+       { "name": "mail_status", "type": "string", "doc": "Status of the mail" }
+     ]
+}
