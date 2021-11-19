@@ -38,6 +38,8 @@ services:
       KAFKA_CONSUMER_MAX_PARTITION_FETCH_BYTES: 99048576
     links:
       - zookeeper
+    ports:
+      - 9095:9095
 
   schema-registry:
     image: confluentinc/cp-schema-registry
@@ -50,6 +52,8 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: 'schema-registry'
       SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:8095'
       SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: 'INFO'
+    ports:
+      - 8095:8095
 
   connect:
     image: confluentinc/cp-kafka-connect
@@ -125,6 +129,7 @@ services:
     image: pockafka-spring
     volumes:
       - /home/nmaxime/pocs/data/tomcat/log:/usr/local/tomcat/logs
+      - /home/nmaxime/pocs/data/spring-app/log:/home/logs
     build:
       context: ../../src
       dockerfile: ./Dockerfile

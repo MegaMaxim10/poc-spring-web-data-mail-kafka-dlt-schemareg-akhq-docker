@@ -125,6 +125,7 @@ services:
     image: pockafka-spring
     volumes:
       - /home/nmaxime/pocs/data/tomcat/log:/usr/local/tomcat/logs
+      - /home/nmaxime/pocs/data/spring-app/log:/home/logs
     build:
       context: ../../src
       dockerfile: ./Dockerfile
