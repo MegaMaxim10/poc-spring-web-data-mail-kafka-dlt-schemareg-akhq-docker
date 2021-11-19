@@ -110,4 +110,24 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+        <profile>
+            <id>docker</id>
+			<activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.docker>,docker</profile.docker>
+				<spring.profiles.active>docker</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>dockerdebug</id>
+            <properties>
+                <profile.dockerdebug>,dockerdebug</profile.dockerdebug>
+				<spring.profiles.active>dockerdebug</spring.profiles.active>
+            </properties>
+        </profile>
+	</profiles>
 </project>
